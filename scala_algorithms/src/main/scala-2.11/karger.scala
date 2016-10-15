@@ -24,7 +24,7 @@ object karger {
       }
       Graph(vertices, maxId + 1)
     }
-    
+
     def chooseRandomEdge(graph: Graph): Edge = {
       def chooseRandomVertex(graph: Graph): Vertex = {
         val keys = graph.vertices.keys.toList
