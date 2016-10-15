@@ -3,7 +3,7 @@
   */
 object scc {
 
-  def main(args: Array[String]): Unit ={
+  def main(args: Array[String]) ={
 
   type Id = Int
 
@@ -26,8 +26,21 @@ object scc {
       def apply(id: Id) = vertices(id)
     }
 
+    def buildGraph(input: Iterator[Array[Int]]): Graph = {
+      val vertices = input.foldLeft(Map[Id,Vertex]()) {
+        case (vertices, line) => {
+          val edge = Edge(line(0), line(1))
 
+          // Add the edge to both the head and tail vertices,
+          // so that we can DFS the graph in reverse
+          val tail = vertices.getOrElse(edge.tail, Vertex(edge.tail, Set[Edge]()))
+          val head = vertices.getOrElse(edge.head, Vertex(edge.head, Set[Edge]()))
 
+          vertices + (tail.id -> tail.addEdge(edge)) + (head.id -> head.addEdge(edge))
+        }
+      }
+      Graph(vertices)
+    }
 
 
 
