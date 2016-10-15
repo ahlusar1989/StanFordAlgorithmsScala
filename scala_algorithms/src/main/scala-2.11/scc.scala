@@ -26,6 +26,37 @@ object scc {
       def apply(id: Id) = vertices(id)
     }
 
+
+    def FinishingTimeTracker(graph: Graph) {
+      private [this] var finished: List[Id] = Nil
+
+      def markFinished(vertex: Vertex): Unit = {
+        // Add each vertex to the head as it finishes,
+        // so we can easily iterate in reverse-finishing-time order
+        finished = vertex.id :: finished
+      }
+
+      def getVerticesInReverseFinishingTimeOrder: Seq[Id] = finished
+
+
+    }
+
+    /** Keeps track of which nodes have been explored by DFS-Loop */
+    class ExploredTracker {
+      private[this] val explored = collection.mutable.Set[Id]()
+
+      def markExplored(vertex: Vertex): Unit =
+        explored += vertex.id
+      def isExplored(vertex: Vertex) = explored contains vertex.id
+    }
+
+
+
+
+    
+    /*
+     * Build a graph from a list of directed edges
+     */
     def buildGraph(input: Iterator[Array[Int]]): Graph = {
       val vertices = input.foldLeft(Map[Id,Vertex]()) {
         case (vertices, line) => {
@@ -42,7 +73,13 @@ object scc {
       Graph(vertices)
     }
 
-
+    val input: Iterator[Array[Int]] = {
+      io.Source.fromFile(new java.io.File("/Users/saran/Desktop/Algorithms/SCC.txt"))
+        .getLines
+        .map(_.split(" ").map(_.toInt))
+    }
+    val graph = buildGraph(input)
+    println(s"Built graph (${graph.vertices.size} nodes)")
 
 
   }
