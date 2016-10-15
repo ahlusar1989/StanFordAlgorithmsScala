@@ -2,7 +2,7 @@
   * Created by saran on 10/15/16.
   */
 object quicksort {
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]) = {
 
     def swap(xs: Array[Int], i: Int, j: Int): Unit = {
       val temp = xs(i)

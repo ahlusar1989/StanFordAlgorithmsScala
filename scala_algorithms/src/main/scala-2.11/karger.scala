@@ -2,7 +2,7 @@
   * Created by saran on 10/15/16.
   */
 object karger {
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]) {
     /*
  * Karger algorithm for finding minimum cut of an undirected graph
  */

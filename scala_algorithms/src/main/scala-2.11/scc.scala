@@ -3,7 +3,7 @@
   */
 object scc {
 
-  def main(args: Array[String]) ={
+  def main(args: Array[String]) = {
 
   type Id = Int
 
@@ -53,7 +53,7 @@ object scc {
 
 
 
-    
+
     /*
      * Build a graph from a list of directed edges
      */
