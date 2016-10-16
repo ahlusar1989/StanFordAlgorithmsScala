@@ -26,9 +26,9 @@ object scc {
       def apply(id: Id) = vertices(id)
     }
 
-
-    def FinishingTimeTracker(graph: Graph) {
-      private [this] var finished: List[Id] = Nil
+    /** Keeps track of when each node's DFS was finished */
+    class FinishingTimeTracker(graph: Graph) {
+      private[this] var finished: List[Id] = Nil
 
       def markFinished(vertex: Vertex): Unit = {
         // Add each vertex to the head as it finishes,
@@ -37,8 +37,6 @@ object scc {
       }
 
       def getVerticesInReverseFinishingTimeOrder: Seq[Id] = finished
-
-
     }
 
     /** Keeps track of which nodes have been explored by DFS-Loop */
