@@ -144,6 +144,65 @@ def count_change(money, coins):
         return 0
     return count_change(money-coins[-1],coins) + count_change(money,coins[:-1])
 
+class TreeNode(object):
+  """Node of a Binary tree."""
+  def __init__(self, key, left=None, right=None):
+    self.key = key
+    self.left = left
+    self.right = right
+
+  def __str__(self):
+    return "{0}".format(self.key)
+
+
+class BinaryTree(object):
+  """ADT for binary tree."""
+
+  def __init__(self, root=None):
+    self.root = root
+
+  def is_root(self, node):
+    return node.key == self.root.key
+
+  def is_leaf(self, node):
+    """Checks whether given node is leaf."""
+    if node is None or self.is_root(node):
+      return False
+    return node.left is None and node.right is None
+
+  def is_internal(self, node):
+    """Checks whether the given node is internal node.
+
+    All nodes except leaf nodes are considered internal nodes.
+    """
+    return not self.is_leaf(node)
+
+  def is_full(self):
+    """Checks if the subtree rooted at the given node is full.
+
+    A Binary tree is full when every node other than leaves
+    has two children.
+    """
+    def recurse(node):
+      if node is None:
+        return True
+      if self.is_leaf(node):
+        return True
+      if node.left is not None and node.right is not None:
+        return recurse(node.left) and recurse(node.right)
+      return False
+    return recurse(self.root)
+
+  def height(self):
+    """Calculates height of the Binary tree."""
+    return self.node_height(self.root)
+
+  def node_height(self, node):
+    """Calculates height of the subtree rooted at given node."""
+    if node is None or self.is_leaf(node):
+      return 0
+    return max(self.node_height(node.left), self.node_height(node.right)) + 1
+
 class TempTracker:
     
     def __init__(self):
