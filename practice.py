@@ -135,18 +135,14 @@ def overlap(r1, r2):
     v_overlaps = (r1.bottom <= r2.top) and (r1.top >= r2.bottom)
     print h_overlaps and v_overlaps
 
-def make_change(amount, denominations):
-    denominations = sorted(denominations, reverse = True)
-    coin_count = 0
-    if amount < 0:
+def count_change(money, coins):
+    if money < 0:
         return 0
-    elif max(denominations) > amount:
+    if money == 0:
+        return 1
+    if money > 0 and not coins:
         return 0
-    else:
-        for coin in denominations:
-            amount = amount - coin
-            coin_count += 1
-    print coin_count
+    return count_change(money-coins[-1],coins) + count_change(money,coins[:-1])
 
 class TempTracker:
     
@@ -191,6 +187,23 @@ class TempTracker:
             return None
 
 
+
+class BinaryTreeNode:
+
+    def __init__(self, value):
+        self.value = value
+        self.left  = None
+        self.right = None
+
+    def insert_left(self, value):
+        self.left = BinaryTreeNode(value)
+        return self.left
+
+    def insert_right(self, value):
+        self.right = BinaryTreeNode(value)
+        return self.right
+
+
 if __name__ == '__main__':
     coinsOptions = [1, 2, 3]
     stock_prices_yesterday = [10, 7, 5, 8, 11, 9]
@@ -202,7 +215,7 @@ if __name__ == '__main__':
     p3 = Point(2,2)
     p4 = Point(4,4)
     r2 = Rect(p3,p4)
-    # make_change(10, coinsOptions)
+    count_change(10, coinsOptions)
     # merged_meeting_times(meeting_times)
     # get_products_of_all_ints_except_at_index(stock_prices_yesterday)
     # get_max_profit(stock_prices_yesterday)
