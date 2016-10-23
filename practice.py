@@ -148,6 +148,48 @@ def make_change(amount, denominations):
             coin_count += 1
     print coin_count
 
+class TempTracker:
+    
+    def __init__(self):
+        # initialize instance variables
+        self.temps = list(0 for x in xrange(111))
+        self.max_temp = None
+        self.min_temp = None
+        self.mean_temp = None
+        self.temp_sum = 0
+        self.temp_num = 0
+
+    def insert(self, temperature):        
+        self.temps[temperature] += 1        
+        self.temp_sum += temperature
+        self.temp_num += 1
+        if self.min_temp == None or temperature < self.min_temp:
+            self.min_temp = temperature
+        if self.max_temp == None or temperature > self.max_temp:
+            self.max_temp = temperature
+  
+    def get_max(self):        
+        # return max temp ever added
+        return self.max_temp
+  
+    def get_min(self):
+        # return min temp ever added
+        return self.min_temp
+  
+    def get_mean(self):
+        # return mean of all temps added
+        if self.temp_num > 0:
+            return self.temp_sum/float(self.temp_num)
+        else:
+            return None
+  
+    def get_mode(self):
+        # return mode of all temps added        
+        if self.temp_num:
+            return self.temps.index(max(self.temps))
+        else:
+            return None
+
 
 if __name__ == '__main__':
     coinsOptions = [1, 2, 3]
