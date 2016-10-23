@@ -129,8 +129,13 @@ class Rect(object):
         self.top    = max(p1.y, p2.y)
 
     @staticmethod
-    def rectangles_overlap(rectangular_dict):
-        pass
+    def overlap(r1, r2):
+        '''Overlapping rectangles overlap both horizontally & vertically
+        '''
+        h_overlaps = (r1.left <= r2.right) and (r1.right >= r2.left)
+        v_overlaps = (r1.bottom <= r2.top) and (r1.top >= r2.bottom)
+        return h_overlaps and v_overlaps
+
 
 
 if __name__ == '__main__':
@@ -145,7 +150,7 @@ if __name__ == '__main__':
     p4 = Point(4,4)
     r2 = Rect(p3,p4)
 
-    
+
     # merged_meeting_times(meeting_times)
     # get_products_of_all_ints_except_at_index(stock_prices_yesterday)
     # get_max_profit(stock_prices_yesterday)
