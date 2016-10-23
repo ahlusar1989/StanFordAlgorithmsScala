@@ -128,14 +128,25 @@ class Rect(object):
         self.bottom = min(p1.y, p2.y)
         self.top    = max(p1.y, p2.y)
 
-    @staticmethod
-    def overlap(r1, r2):
-        '''Overlapping rectangles overlap both horizontally & vertically
-        '''
-        h_overlaps = (r1.left <= r2.right) and (r1.right >= r2.left)
-        v_overlaps = (r1.bottom <= r2.top) and (r1.top >= r2.bottom)
-        return h_overlaps and v_overlaps
+def overlap(r1, r2):
+    '''Overlapping rectangles overlap both horizontally & vertically
+    '''
+    h_overlaps = (r1.left <= r2.right) and (r1.right >= r2.left)
+    v_overlaps = (r1.bottom <= r2.top) and (r1.top >= r2.bottom)
+    print h_overlaps and v_overlaps
 
+def make_change(amount, denominations):
+    denominations = sorted(denominations, reverse = True)
+    coin_count = 0
+    if amount < 0:
+        return 0
+    elif max(denominations) > amount:
+        return 0
+    else:
+        for coin in denominations:
+            amount = amount - coin
+            coin_count += 1
+    print coin_count
 
 
 if __name__ == '__main__':
@@ -149,11 +160,10 @@ if __name__ == '__main__':
     p3 = Point(2,2)
     p4 = Point(4,4)
     r2 = Rect(p3,p4)
-
-
+    # make_change(10, coinsOptions)
     # merged_meeting_times(meeting_times)
     # get_products_of_all_ints_except_at_index(stock_prices_yesterday)
     # get_max_profit(stock_prices_yesterday)
     # highest_product_of_three(stock_prices_yesterday)
-
+    # overlap(r1,r2)
 
