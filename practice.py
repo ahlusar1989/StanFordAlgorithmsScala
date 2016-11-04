@@ -142,7 +142,7 @@ def count_change(money, coins):
         return 1
     if money > 0 and not coins:
         return 0
-    return count_change(money-coins[-1],coins) + count_change(money,coins[:-1])
+    return count_change(money-coins[-1], coins) + count_change(money, coins[:-1])
 
 class TreeNode(object):
     """Node of a Binary tree."""
@@ -155,7 +155,6 @@ class TreeNode(object):
 
 
 class BinaryTree(object):
-  """ADT for binary tree."""
     def __init__(self, root=None):
         self.root = root
 
@@ -163,23 +162,15 @@ class BinaryTree(object):
         return node.key == self.root.key
 
     def is_leaf(self, node):
-    """Checks whether given node is leaf."""
-    if node is None or self.is_root(node):
-        return False
-    return node.left is None and node.right is None
+        if node is None or self.is_root(node):
+            return False
+        return node.left is None and node.right is None
 
     def is_internal(self, node):
-    """Checks whether the given node is internal node.
-
-    All nodes except leaf nodes are considered internal nodes.
-    """
         return not self.is_leaf(node)
-    def is_full(self):
-        """Checks if the subtree rooted at the given node is full.
 
-        A Binary tree is full when every node other than leaves
-        has two children.
-        """
+    def is_full(self):
+
         def recurse(node):
             if node is None:
                 return True
@@ -191,11 +182,9 @@ class BinaryTree(object):
         return recurse(self.root)
 
     def height(self):
-        """Calculates height of the Binary tree."""
         return self.node_height(self.root)
 
     def node_height(self, node):
-        """Calculates height of the subtree rooted at given node."""
         if node is None or self.is_leaf(node):
             return 0
         return max(self.node_height(node.left), self.node_height(node.right)) + 1
@@ -252,7 +241,6 @@ class TempTracker:
             return None
 
 
-
 class BinaryTreeNode:
 
     def __init__(self, value):
@@ -268,19 +256,298 @@ class BinaryTreeNode:
         self.right = BinaryTreeNode(value)
         return self.right
 
+    def findKthLargest(self, root, k):
+        global count
+        if root is None:
+            return
+        findKthLargest(root.right, k)
+        count += 1
+        if count == k:
+            print root.value
+            return
+        findKthLargest(root.left, k)
+
+class Queue(object):
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.q = []
+        
+
+    def push(self, x):
+        """
+        :type x: int
+        :rtype: nothing
+        """
+        self.q.append(x)
+        
+
+    def pop(self):
+        """
+        :rtype: nothing
+        """
+        self.q.pop()
+        
+
+    def peek(self):
+        """
+        :rtype: int
+        """
+        
+
+    def empty(self):
+        """
+        :rtype: bool
+        """
+        len(self.q) == 0
+
+class Stack:
+
+    # initialize an empty list
+    def __init__(self):
+        self.items = []
+
+    # push a new item to the last index
+    def push(self, item):
+        self.items.append(item)
+
+    # remove the last item
+    def pop(self):
+        # if the stack is empty, return None
+        # (it would also be reasonable to throw an exception)
+        if not self.items: 
+            return None
+        return self.items.pop()
+
+    # see what the last item is
+    def peek(self):
+        if not self.items: 
+            return None
+        return self.items[-1]
+
+
+class MaxStack(Stack):
+
+    # initialize an empty list
+    def __init__(self):
+        self.items = []
+
+    def get_max(self):
+        return max(items)
+
+def kth_smallest_element(arr1, arr2, k):
+    temp = []
+    i = 0
+    for i in arr1:
+        temp[i] = arr1[i]
+    for j in arr2:
+        temp[i] = arr2[j]
+        i += 1
+    return sorted(temp, reverse=False)[k+1]
+
+
+def mergeSort(seq):
+    if len(seq) == 0:
+        return 0
+    elif len(seq) < 2:
+        return seq
+    m = len(seq) / 2
+    return merge(merge_sort(seq[:m]), merge_sort(seq[m:]))
+        
+def merge(left, right):
+    result = []
+    i, j = 0
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result += left[i:]
+    result += right[j:]
+    return result
+
+
+def findComplementingWeights(arr, limit):
+    hashtable = {}
+    for index, mass in enumerate(arr):
+        if mass in hashtable:
+            print hashtable[mass], index
+            return hashtable[mass], index
+        else:
+            hashtable[limit - mass] = index
+    return -1
+
+def findKth(A, B, k):
+    if len(A) > len(B):
+        A, B = (B,A)
+
+    if not A:
+        return B[k]
+
+    if k == len(A) + len(B) - 1:
+        return max(A[-1], B[-1])
+
+    i = min(len(A) -1, k/2)
+    j = min(len(B) - 1, k -i)
+
+    if A[i] > A[j]:
+        return findKth(A[:i], B[j:], i)
+    else:
+        return findKth(A[i:], B[:j], j)
+
+def preOrderTraversal(root):
+    result = []
+    node = []
+    if not root:
+        return res
+    node.append(root)
+    while node:
+        temp = node.pop()
+        result.append(temp)
+        if temp.right:
+            node.append(temp.right)
+        else:
+            result.append(temp.left)
+    return result
+
+def inorderTraversal(self, root):
+    if not root:
+        return []
+        
+    stack = [root]
+    ans = []
+    
+    while stack:
+        node = stack.pop()
+        if isinstance(node, int):
+            ans.append(node)
+            continue
+        if node.right:  # if has right node, push into stack
+            stack.append(node.right)
+        stack.append(node.val)  # Push VALUE into stack, in between left and right
+        if node.left:  # if has left node, push into stack
+            stack.append(node.left)
+            
+    return ans
+
+
+
+def max_duffel_bag_value(cake_tuples, weight_capacity):
+
+    # we make a list to hold the maximum possible value at every
+    # duffel bag weight capacity from 0 to weight_capacity
+    # starting each index with value 0
+    max_values_at_capacities = [0] * (weight_capacity + 1)
+
+    for current_capacity in xrange(weight_capacity + 1):
+
+        # set a variable to hold the max monetary value so far for current_capacity
+        current_max_value = 0
+
+        for cake_weight, cake_value in cake_tuples:
+
+            # if a cake weighs 0 and has a positive value the value of our duffel bag is infinite!
+            if (cake_weight == 0 and cake_value != 0):
+                return float('inf')
+
+            # if the current cake weighs as much or less than the current weight capacity
+            # it's possible taking the cake would give get a better value
+            if (cake_weight <= current_capacity):
+
+                # so we check: should we use the cake or not?
+                # if we use the cake, the most kilograms we can include in addition to the cake
+                # we're adding is the current capacity minus the cake's weight. we find the max
+                # value at that integer capacity in our list max_values_at_capacities
+                max_value_using_cake = cake_value + max_values_at_capacities[current_capacity - cake_weight]
+
+                # now we see if it's worth taking the cake. how does the
+                # value with the cake compare to the current_max_value?
+                current_max_value = max(max_value_using_cake, current_max_value)
+
+        # add each capacity's max value to our list so we can use them
+        # when calculating all the remaining capacities
+        max_values_at_capacities[current_capacity] = current_max_value
+
+    return max_values_at_capacities[weight_capacity]
+
+
+
+class LinkedListNode:
+
+def __init__(self, value):
+    self.value = value
+    self.next  = None
+
+def check_cycle(first_node):
+
+# start both runners at the beginning
+slow_runner = first_node
+fast_runner = first_node
+
+# until we hit the end of the list
+while fast_runner is not None and fast_runner.next is not None:
+    slow_runner = slow_runner.next
+    fast_runner = fast_runner.next.next
+
+    # case: fast_runner is about to "lap" slow_runner
+    if fast_runner is slow_runner:
+        return True
+
+# case: fast_runner hit the end of the list
+return False
+
+def is_single_riffle_recursive_optimized(half1, half2, shuffled_deck, shuffled_deck_index=0, half1_index=0, half2_index=0):
+
+    # base case we've hit the end of shuffled_deck
+    if shuffled_deck_index == len(shuffled_deck):
+        return True
+
+    # if we still have cards in half1
+    # and the "top" card in half1 is the same
+    # as the top card in shuffled_deck
+    if (half1_index < len(half1)) and \
+            half1[half1_index] == shuffled_deck[shuffled_deck_index]:
+        half1_index += 1
+
+    # if we still have cards in half2
+    # and the "top" card in half2 is the same
+    # as the top card in shuffled_deck
+    elif (half2_index < len(half2)) and \
+            half2[half2_index] == shuffled_deck[shuffled_deck_index]:
+        half2_index += 1
+
+    # if the top card in shuffled_deck doesn't match the top
+    # card in half1 or half2, this isn't a single riffle.
+    else:
+        return False
+
+    # the current card in shuffled_deck has now been "accounted for"
+    # so move on to the next one
+    shuffled_deck_index += 1
+
+    return is_single_riffle_recursive_optimized(half1, half2, shuffled_deck, shuffled_deck_index, half1_index, half2_index)
+
+
 
 if __name__ == '__main__':
     coinsOptions = [1, 2, 3]
     stock_prices_yesterday = [10, 7, 5, 8, 11, 9]
     meeting_times =   [(0, 1), (3, 5), (4, 8), (10, 12), (9, 10)]
+    limit = 2
+    # findComplementingWeights(stock_prices_yesterday, limit)
+    # p1 = Point(1,1)
+    # p2 = Point(3,3)
+    # r1 = Rect(p1,p2)
+    # p3 = Point(2,2)
+    # p4 = Point(4,4)
+    # r2 = Rect(p3,p4)
+    # count_change(10, coinsOptions)
+    # merge_sort(seq)
 
-    p1 = Point(1,1)
-    p2 = Point(3,3)
-    r1 = Rect(p1,p2)
-    p3 = Point(2,2)
-    p4 = Point(4,4)
-    r2 = Rect(p3,p4)
-    count_change(10, coinsOptions)
+
     # merged_meeting_times(meeting_times)
     # get_products_of_all_ints_except_at_index(stock_prices_yesterday)
     # get_max_profit(stock_prices_yesterday)
